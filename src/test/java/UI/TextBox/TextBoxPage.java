@@ -1,4 +1,4 @@
-package TextBox;
+package UI.TextBox;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;

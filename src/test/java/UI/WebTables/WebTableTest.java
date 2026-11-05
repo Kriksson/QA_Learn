@@ -1,4 +1,4 @@
-package WebTables;
+package UI.WebTables;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
@@ -6,8 +6,6 @@ import com.codeborne.selenide.SelenideElement;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-
-import javax.swing.text.Element;
 
 import java.util.ArrayList;
 import java.util.List;

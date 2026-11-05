@@ -1,4 +1,4 @@
-package TextBox;
+package UI.TextBox;
 
 public class Output {
     private final String name;

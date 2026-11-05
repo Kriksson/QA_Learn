@@ -1,4 +1,4 @@
-package CheckBox;
+package UI.CheckBox;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

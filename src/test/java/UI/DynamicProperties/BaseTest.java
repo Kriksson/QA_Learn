@@ -1,4 +1,4 @@
-package WebTables;
+package UI.DynamicProperties;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;

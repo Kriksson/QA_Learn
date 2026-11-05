@@ -1,4 +1,4 @@
-package RadioButton;
+package UI.RadioButton;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
