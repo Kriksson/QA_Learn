@@ -26,18 +26,33 @@ pipeline {
         }
 
         stage("Запустить API Автотесты") {
+            when {
+                expression {
+                    params.TEST_SET == 'API' || params.TEST_SET == 'ALL'
+                }
+            }
             steps {
                 sh './mvnw -B "-Dtest=API/**/*Test" clean test'
             }
         }
 
         stage("Запустить UI-Автотесты") {
+            when {
+                expression {
+                    params.TEST_SET == 'UI' || params.TEST_SET == 'ALL'
+                }
+            }
             steps {
                 sh './mvnw -B "-Dtest=UI/**/*Test" -Dselenide.remote=http://selenoid:4444/wd/hub -Dselenide.browserVersion=128.0 test'
             }
         }
 
         stage("Запустить UI-API-Автотесты") {
+            when {
+                expression {
+                    params.TEST_SET == 'UI' || params.TEST_SET == 'ALL'
+                }
+            }
             steps {
                 sh './mvnw -B "-Dtest=API_UI/**/*Test" -Dselenide.remote=http://selenoid:4444/wd/hub -Dselenide.browserVersion=128.0 test'
             }
