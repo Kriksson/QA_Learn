@@ -1,0 +1,27 @@
+services:
+  chrome:
+    image: selenium/standalone-chrome:latest
+    shm_size: 2gb
+    healthcheck:
+      test: ["CMD", "/opt/bin/check-grid.sh", "--host", "0.0.0.0", "--port", "4444"]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+
+  tests:
+    build: .
+    depends_on:
+      chrome:
+        condition: service_healthy
+    command:
+      - mvn
+      - -B
+      - test
+      - -Dselenide.remote=http://chrome:4444
+    volumes:
+      - ./allure-results:/tests/allure-results
+      - maven-cache:/root/.m2
+
+
+volumes:
+  maven-cache:

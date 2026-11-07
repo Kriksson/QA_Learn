@@ -34,7 +34,7 @@ public class ProductTest {
                 .extract().body().as(ProductPOJO.class));
 
         Allure.step("Проверить данные полученного продукта с ожидаемыми", () -> {
-            Assert.assertEquals(Integer.valueOf(1), product.id());
+            Assert.assertEquals(Integer.valueOf(999), product.id());
             Assert.assertFalse(product.title().isEmpty());
             Assert.assertTrue(product.price() > 0);
             Assert.assertEquals("men's clothing", product.category());
