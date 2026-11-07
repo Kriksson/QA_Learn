@@ -32,7 +32,7 @@ pipeline {
                 }
             }
             steps {
-                sh './mvnw -B "-Dtest=API/**/*Test" clean test'
+                sh './mvnw -B "-Dtest=API/**/*Test" test'
             }
         }
 
@@ -50,11 +50,21 @@ pipeline {
         stage("Запустить UI-API-Автотесты") {
             when {
                 expression {
-                    params.TEST_SET == 'UI' || params.TEST_SET == 'ALL'
+                    params.TEST_SET == 'UI+API' || params.TEST_SET == 'ALL'
                 }
             }
             steps {
                 sh './mvnw -B "-Dtest=API_UI/**/*Test" -Dselenide.remote=http://selenoid:4444/wd/hub -Dselenide.browserVersion=128.0 test'
+            }
+        }
+
+        stage('Очистить результаты пред.запуска') {
+            steps {
+                sh './mvnw -B clean'
+
+                dir('allure-results') {
+                    deleteDir()
+                }
             }
         }
     }
