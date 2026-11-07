@@ -32,6 +32,15 @@ pipeline {
             }
         }
 
+        stage('Очистить результаты пред.запуска') {
+            steps {
+                sh './mvnw -B clean'
+                dir('allure-results') {
+                    deleteDir()
+                }
+            }
+        }
+
         stage("Запустить API Автотесты") {
             when {
                 expression {
@@ -62,16 +71,6 @@ pipeline {
             }
             steps {
                 sh './mvnw -B $JUNIT_ARGS "-Dtest=API_UI/**/*Test" -Dselenide.remote=http://selenoid:4444/wd/hub -Dselenide.browserVersion=128.0 test'
-            }
-        }
-
-        stage('Очистить результаты пред.запуска') {
-            steps {
-                sh './mvnw -B clean'
-
-                dir('allure-results') {
-                    deleteDir()
-                }
             }
         }
     }
