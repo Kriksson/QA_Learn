@@ -4,10 +4,17 @@ pipeline {
     environment {
         JAVA_HOME = '/opt/jdk-27'
         PATH = "${JAVA_HOME}/bin:${env.PATH}"
+        JUNIT_ARGS = "-Djunit.jupiter.execution.parallel.config.fixed.parallelism=${params.THREADS} -Djunit.jupiter.execution.parallel.config.fixed.max-pool-size=${params.THREADS}"
     }
 
     parameters {
         choice(name: 'TEST_SET', choices: ['API', 'UI', 'UI+API', 'ALL'], description: 'Какой набор тестов запустить?')
+        choice(
+            name: 'THREADS',
+            choices: ['1', '2'],
+            description: 'Количество потоков для выполнения тестов'
+        )
+
     }
 
     stages {
@@ -32,7 +39,7 @@ pipeline {
                 }
             }
             steps {
-                sh './mvnw -B "-Dtest=API/**/*Test" test'
+                sh './mvnw -B $JUNIT_ARGS "-Dtest=API/**/*Test" test'
             }
         }
 
@@ -43,7 +50,7 @@ pipeline {
                 }
             }
             steps {
-                sh './mvnw -B "-Dtest=UI/**/*Test" -Dselenide.remote=http://selenoid:4444/wd/hub -Dselenide.browserVersion=128.0 test'
+                sh './mvnw -B $JUNIT_ARGS "-Dtest=UI/**/*Test" -Dselenide.remote=http://selenoid:4444/wd/hub -Dselenide.browserVersion=128.0 test'
             }
         }
 
@@ -54,7 +61,7 @@ pipeline {
                 }
             }
             steps {
-                sh './mvnw -B "-Dtest=API_UI/**/*Test" -Dselenide.remote=http://selenoid:4444/wd/hub -Dselenide.browserVersion=128.0 test'
+                sh './mvnw -B $JUNIT_ARGS "-Dtest=API_UI/**/*Test" -Dselenide.remote=http://selenoid:4444/wd/hub -Dselenide.browserVersion=128.0 test'
             }
         }
 
