@@ -12,7 +12,9 @@ public abstract class BaseTest {
 
     @BeforeEach
     void setUp() {
-        WebDriverManager.chromedriver().setup();
+        if (Configuration.remote == null) {
+            WebDriverManager.chromedriver().setup();
+        }
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1200";
         Configuration.headless = false;
