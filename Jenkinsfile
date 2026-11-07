@@ -6,6 +6,10 @@ pipeline {
         PATH = "${JAVA_HOME}/bin:${env.PATH}"
     }
 
+    parameters {
+        choice(name: 'TEST_SET', choices: ['API', 'UI', 'UI+API', 'ALL'], description: 'Какой набор тестов запустить?')
+    }
+
     stages {
         stage("Получить исходники") {
             steps {
