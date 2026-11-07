@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class WebTableTest extends BaseTest {
         });
 
         Allure.step("Дождаться формы и заполнить данные Alex Petrov", () -> {
-            webTablePage.firstNameInput.shouldBe(visible);
+            webTablePage.firstNameInput.shouldBe(visible, Duration.ofSeconds(10));
             webTablePage.firstNameInput.setValue(ADD_FIRST_NAME);
             webTablePage.lastNameInput.setValue(ADD_LAST_NAME);
             webTablePage.emailInput.setValue(ADD_EMAIL);
